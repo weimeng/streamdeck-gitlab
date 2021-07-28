@@ -1,0 +1,85 @@
+{
+  "Actions": [
+    {
+      "Icon": "img/iconIssues",
+      "Name": "Assigned Issues Count",
+      "States": [
+        {
+          "Image": "img/stateIssueNeutral",
+          "TitleAlignment": "bottom",
+          "FontSize": "15"
+        },
+        {
+          "Image": "img/stateIssueAlert",
+          "TitleAlignment": "bottom",
+          "FontSize": "15"
+        }
+      ],
+      "SupportedInMultiActions": false,
+      "Tooltip": "Displays a count of your GitLab assigned issues",
+      "UUID": "co.weimeng.streamdeck-gitlab.issues"
+    },
+    {
+      "Icon": "img/iconMRs",
+      "Name": "Assigned Merge Requests Count",
+      "States": [
+        {
+          "Image": "img/stateMRneutral",
+          "TitleAlignment": "bottom",
+          "FontSize": "15"
+        },
+        {
+          "Image": "img/stateMRalert",
+          "TitleAlignment": "bottom",
+          "FontSize": "15"
+        }
+      ],
+      "SupportedInMultiActions": false,
+      "Tooltip": "Displays a count of your assigned GitLab merge requests",
+      "UUID": "co.weimeng.streamdeck-gitlab.mergerequests"
+    },
+    {
+      "Icon": "img/iconTodos",
+      "Name": "Pending Todos Count",
+      "States": [
+        {
+          "Image": "img/stateTodoNeutral",
+          "TitleAlignment": "bottom",
+          "FontSize": "15"
+        },
+        {
+          "Image": "img/stateTodoAlert",
+          "TitleAlignment": "bottom",
+          "FontSize": "15"
+        }
+      ],
+      "SupportedInMultiActions": false,
+      "Tooltip": "Displays a count of your pending GitLab to-dos",
+      "UUID": "co.weimeng.streamdeck-gitlab.todos"
+    }
+  ],
+  "Author": "Wei-Meng Lee",
+  "CodePath": "plugin/index.html",
+  "PropertyInspectorPath": "pi/index.html",
+  "Description": "View your GitLab assigned issues, assigned merge requests and pending to-do counts in your Stream Deck.",
+  "Name": "GitLab Dashboard",
+  "Icon": "img/pluginIcon",
+  "Category": "GitLab",
+  "CategoryIcon": "img/gitlab",
+  "URL": "https://gitlab.com/weimeng/streamdeck-gitlab",
+  "Version": "1.0",
+  "OS": [
+    {
+      "Platform": "mac",
+      "MinimumVersion": "10.13"
+    },
+    {
+      "Platform": "windows",
+      "MinimumVersion": "10"
+    }
+  ],
+  "SDKVersion": 2,
+  "Software": {
+    "MinimumVersion": "4.1"
+  }
+}

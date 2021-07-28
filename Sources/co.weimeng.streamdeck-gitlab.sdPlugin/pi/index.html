@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>co.weimeng.gitlab PI</title>
+  <link rel="stylesheet" href="sdpi.css">
+  <script src="../common.js"></script>
+</head>
+
+<body>
+  <div class="sdpi-wrapper" id="mainWrapper">
+    <div class="sdpi-item">
+      <div class="sdpi-item-label">GitLab URL</div>
+      <input class="sdpi-item-value" id="gitlabUrl" type="text" onchange="saveSettings();" />
+    </div>
+
+    <div class="sdpi-item">
+      <div class="sdpi-item-label">Username</div>
+      <input class="sdpi-item-value" id="gitlabUsername" type="text" onchange="saveSettings();" />
+    </div>
+
+    <div class="sdpi-item">
+      <div class="sdpi-item-label">Access token</div>
+      <input class="sdpi-item-value" id="gitlabToken" type="password" onchange="saveSettings();" />
+    </div>
+  </div>
+
+  <script>
+    var uuid, globalSettings;
+
+    $SD.on('connected', (event) => connected(event));
+    $SD.on('didReceiveGlobalSettings', (event) => didReceiveGlobalSettings(event));
+
+    function connected(event) {
+      uuid = event.uuid;
+
+      $SD.api.getGlobalSettings(uuid);
+    }
+
+    function didReceiveGlobalSettings(event) {
+      globalSettings = event.payload.settings;
+
+      if (globalSettings.gitlabToken) {
+        document.getElementById('gitlabToken').value = globalSettings.gitlabToken;
+      }
+
+      if (globalSettings.gitlabUrl) {
+        document.getElementById('gitlabUrl').value = globalSettings.gitlabUrl;
+      }
+
+      if (globalSettings.gitlabUsername) {
+        document.getElementById('gitlabUsername').value = globalSettings.gitlabUsername;
+      }
+
+      document.getElementById('mainWrapper').classList.remove('hidden');
+    }
+
+    function saveSettings() {
+      const gitlabToken = document.getElementById('gitlabToken').value;
+      const gitlabUrl = document.getElementById('gitlabUrl').value;
+      const gitlabUsername = document.getElementById('gitlabUsername').value;
+
+      globalSettings.gitlabToken = gitlabToken;
+      globalSettings.gitlabUrl = gitlabUrl;
+      globalSettings.gitlabUsername = gitlabUsername;
+      $SD.api.setGlobalSettings(uuid, globalSettings)
+    }
+  </script>
+</body>
+
+</html>
