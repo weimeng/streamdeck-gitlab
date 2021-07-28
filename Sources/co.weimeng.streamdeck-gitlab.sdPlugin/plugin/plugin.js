@@ -108,6 +108,7 @@ let mrContext, mrCount;
 
 function onMRsWillAppear(event) {
   mrContext = event.context;
+  updateMRCount();
   onCommonWillAppear(event);
 }
 
@@ -126,11 +127,9 @@ function onMRsKeyUp(event) {
 function updateMRCount() {
   let mrTempCount = userCounts.assigned_merge_requests + userCounts.review_requested_merge_requests;
 
-  if (mrTempCount !== undefined && mrTempCount > mrCount) {
-    $SD.api.setState(mrContext, 1);
-  }
+  if (mrTempCount !== undefined) {
+    if (mrTempCount > mrCount) $SD.api.setState(mrContext, 1);
 
-  if (mrTempCount != mrCount) {
     $SD.api.setTitle(mrContext, mrTempCount);
   }
 
@@ -145,6 +144,7 @@ let issueContext, issueCount;
 
 function onIssuesWillAppear(event) {
   issueContext = event.context;
+  updateIssueCount();
   onCommonWillAppear(event);
 }
 
@@ -163,11 +163,9 @@ function onIssuesKeyUp(event) {
 function updateIssueCount() {
   let issueTempCount = userCounts.assigned_issues;
 
-  if (issueTempCount !== undefined && issueTempCount > issueCount) {
-    $SD.api.setState(issueContext, 1);
-  }
+  if (issueTempCount !== undefined) {
+    if (issueTempCount > issueCount) $SD.api.setState(issueContext, 1);
 
-  if (issueTempCount != issueCount) {
     $SD.api.setTitle(issueContext, issueTempCount);
   }
 
@@ -182,6 +180,7 @@ let todoContext, todoCount;
 
 function onTodosWillAppear(event) {
   todoContext = event.context;
+  updateTodoCount();
   onCommonWillAppear(event);
 }
 
@@ -200,11 +199,9 @@ function onTodosKeyUp(event) {
 function updateTodoCount() {
   let todoTempCount = userCounts.todos;
 
-  if (todoTempCount !== undefined && todoTempCount > todoCount) {
-    $SD.api.setState(mrContext, 1);
-  }
+  if (todoTempCount !== undefined) {
+    if (todoTempCount > todoCount) $SD.api.setState(mrContext, 1);
 
-  if (todoTempCount != todoCount) {
     $SD.api.setTitle(mrContext, todoTempCount);
   }
 
