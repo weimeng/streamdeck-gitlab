@@ -18,3 +18,10 @@ counts in your Stream Deck.
 1. Enter your GitLab URL (without trailing slash), username and personal access
    token in the Stream Deck key properties.
 1. Done!
+
+## Contributing
+
+The main repository is located on GitLab.com at https://gitlab.com/weimeng/streamdeck-gitlab.
+
+Issues should be reported in the [GitLab.com project issue tracker](https://gitlab.com/weimeng/streamdeck-gitlab/-/issues).
+Code contributions are welcome.
