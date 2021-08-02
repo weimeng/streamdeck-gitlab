@@ -200,9 +200,9 @@ function updateTodoCount() {
   let todoTempCount = userCounts.todos;
 
   if (todoTempCount !== undefined) {
-    if (todoTempCount > todoCount) $SD.api.setState(mrContext, 1);
+    if (todoTempCount > todoCount) $SD.api.setState(todoContext, 1);
 
-    $SD.api.setTitle(mrContext, todoTempCount);
+    $SD.api.setTitle(todoContext, todoTempCount);
   }
 
   todoCount = todoTempCount;
