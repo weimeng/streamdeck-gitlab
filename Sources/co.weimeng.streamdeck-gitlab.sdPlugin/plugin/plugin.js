@@ -26,11 +26,24 @@ function onConnected(event) {
   $SD.on('co.weimeng.streamdeck-gitlab.issues.keyDown', (event) => onIssuesKeyDown(event));
   $SD.on('co.weimeng.streamdeck-gitlab.issues.keyUp', (event) => onIssuesKeyUp(event));
 
+  // Combined merge requests
+  $SD.on('co.weimeng.streamdeck-gitlab.mergerequests.willAppear', (event) => onMRsWillAppear(event, 'combined'));
+  $SD.on('co.weimeng.streamdeck-gitlab.mergerequests.willDisappear', (event) => onMRsWillDisappear(event, 'combined'));
+  $SD.on('co.weimeng.streamdeck-gitlab.mergerequests.keyDown', (event) => onMRsKeyDown(event, 'combined'));
+  $SD.on('co.weimeng.streamdeck-gitlab.mergerequests.keyUp', (event) => onMRsKeyUp(event, 'combined'));
+
   // Assigned merge requests
-  $SD.on('co.weimeng.streamdeck-gitlab.mergerequests.willAppear', (event) => onMRsWillAppear(event));
-  $SD.on('co.weimeng.streamdeck-gitlab.mergerequests.willDisappear', (event) => onMRsWillDisappear(event));
-  $SD.on('co.weimeng.streamdeck-gitlab.mergerequests.keyDown', (event) => onMRsKeyDown(event));
-  $SD.on('co.weimeng.streamdeck-gitlab.mergerequests.keyUp', (event) => onMRsKeyUp(event));
+  $SD.on('co.weimeng.streamdeck-gitlab.mr-assigns.willAppear', (event) => onMRsWillAppear(event, 'assigns'));
+  $SD.on('co.weimeng.streamdeck-gitlab.mr-assigns.willDisappear', (event) => onMRsWillDisappear(event, 'assigns'));
+  $SD.on('co.weimeng.streamdeck-gitlab.mr-assigns.keyDown', (event) => onMRsKeyDown(event, 'assigns'));
+  $SD.on('co.weimeng.streamdeck-gitlab.mr-assigns.keyUp', (event) => onMRsKeyUp(event, 'assigns'));
+
+  // Combined merge requests
+  $SD.on('co.weimeng.streamdeck-gitlab.mr-reviews.willAppear', (event) => onMRsWillAppear(event, 'reviews'));
+  $SD.on('co.weimeng.streamdeck-gitlab.mr-reviews.willDisappear', (event) => onMRsWillDisappear(event, 'reviews'));
+  $SD.on('co.weimeng.streamdeck-gitlab.mr-reviews.keyDown', (event) => onMRsKeyDown(event, 'reviews'));
+  $SD.on('co.weimeng.streamdeck-gitlab.mr-reviews.keyUp', (event) => onMRsKeyUp(event, 'reviews'));
+
 
   // Pending Todos
   $SD.on('co.weimeng.streamdeck-gitlab.todos.willAppear', (event) => onTodosWillAppear(event));
@@ -64,7 +77,6 @@ function onCommonWillDisappear(event) {
 
   // Stop polling GitLab API if all action instances are removed
   if (Object.keys(appearContexts).length < 1) {
-    console.log('Unsetting fetchTimer');
     clearInterval(fetchTimer);
     fetchTimer = null;
   }
@@ -104,36 +116,51 @@ function fetchGitlabUserCounts() {
 // Merge Requests
 //
 
-let mrContext, mrCount;
+let mrContext = {},
+    mrCount = {};
 
-function onMRsWillAppear(event) {
-  mrContext = event.context;
+function onMRsWillAppear(event, mrType) {
+  mrContext[mrType] = event.context;
   updateMRCount();
   onCommonWillAppear(event);
 }
 
-function onMRsWillDisappear(event) {
+function onMRsWillDisappear(event, _mrType) {
   onCommonWillDisappear(event);
 }
 
-function onMRsKeyDown(event) {
-  $SD.api.openUrl(event.context, `${globalSettings.gitlabUrl}/dashboard/merge_requests?assignee_username=${globalSettings.gitlabUsername}`);
+function onMRsKeyDown(event, mrType) {
+  let url = `${globalSettings.gitlabUrl}/dashboard/merge_requests`;
+
+  if (mrType === 'reviews') {
+    url += `?reviewer_username=${globalSettings.gitlabUsername}`;
+  } else {
+    url += `?assignee_username=${globalSettings.gitlabUsername}`;
+  }
+
+  $SD.api.openUrl(event.context, url);
 }
 
-function onMRsKeyUp(event) {
+function onMRsKeyUp(event, _mrType) {
   $SD.api.setState(event.context, 0);
 }
 
 function updateMRCount() {
-  let mrTempCount = userCounts.assigned_merge_requests + userCounts.review_requested_merge_requests;
+  let mrTempCount = {
+    'combined': userCounts.assigned_merge_requests + userCounts.review_requested_merge_requests,
+    'assigns': userCounts.assigned_merge_requests,
+    'reviews': userCounts.review_requested_merge_requests,
+  };
 
-  if (mrTempCount !== undefined) {
-    if (mrTempCount > mrCount) $SD.api.setState(mrContext, 1);
+  for ([mrType, mrTypeTempCount] of Object.entries(mrTempCount)) {
+    if (mrTypeTempCount !== undefined) {
+      if (mrTypeTempCount > mrCount[mrType]) $SD.api.setState(mrContext[mrType], 1);
 
-    $SD.api.setTitle(mrContext, mrTempCount);
+      $SD.api.setTitle(mrContext[mrType], mrTypeTempCount);
+    }
+
+    mrCount[mrType] = mrTypeTempCount;
   }
-
-  mrCount = mrTempCount;
 }
 
 //

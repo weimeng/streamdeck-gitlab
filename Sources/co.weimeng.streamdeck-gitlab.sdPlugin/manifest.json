@@ -21,7 +21,7 @@
     },
     {
       "Icon": "img/iconMRs",
-      "Name": "Assigned Merge Requests Count",
+      "Name": "Combined Merge Requests Count",
       "States": [
         {
           "Image": "img/stateMRneutral",
@@ -35,8 +35,46 @@
         }
       ],
       "SupportedInMultiActions": false,
-      "Tooltip": "Displays a count of your assigned GitLab merge requests",
+      "Tooltip": "Displays a count of your assigned and review-requested GitLab merge requests",
       "UUID": "co.weimeng.streamdeck-gitlab.mergerequests"
+    },
+    {
+      "Icon": "img/iconMRsAssigned",
+      "Name": "Assigned Merge Requests Count",
+      "States": [
+        {
+          "Image": "img/stateMRAssignedNeutral",
+          "TitleAlignment": "bottom",
+          "FontSize": "15"
+        },
+        {
+          "Image": "img/stateMRAssignedAlert",
+          "TitleAlignment": "bottom",
+          "FontSize": "15"
+        }
+      ],
+      "SupportedInMultiActions": false,
+      "Tooltip": "Displays a count of your assigned GitLab merge requests",
+      "UUID": "co.weimeng.streamdeck-gitlab.mr-assigns"
+    },
+    {
+      "Icon": "img/iconMRsReview",
+      "Name": "Merge Request Review Requested Count",
+      "States": [
+        {
+          "Image": "img/stateMRReviewNeutral",
+          "TitleAlignment": "bottom",
+          "FontSize": "15"
+        },
+        {
+          "Image": "img/stateMRReviewAlert",
+          "TitleAlignment": "bottom",
+          "FontSize": "15"
+        }
+      ],
+      "SupportedInMultiActions": false,
+      "Tooltip": "Displays a count of your review-requested GitLab merge requests",
+      "UUID": "co.weimeng.streamdeck-gitlab.mr-reviews"
     },
     {
       "Icon": "img/iconTodos",
@@ -67,7 +105,7 @@
   "Category": "GitLab",
   "CategoryIcon": "img/gitlab",
   "URL": "https://gitlab.com/weimeng/streamdeck-gitlab",
-  "Version": "1.0",
+  "Version": "1.1",
   "OS": [
     {
       "Platform": "mac",

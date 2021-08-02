@@ -6,9 +6,14 @@ counts in your Stream Deck.
 
 ## Features
 
-* Counters for assigned issues, assigned merge requests and pending to-dos.
+* Counters for assigned issues, assigned merge requests, review-requested merge requests and pending to-dos.
 * Button is highlighted when counters increase.
 * Each button also opens its respective dashboard page.
+
+## Requirements
+
+* Combined merge requests count requires GitLab 13.8 or later.
+* Assigned issues, review-requested merge requests and pending to-dos counts require GitLab 14.2 or later.
 
 ## Installation
 
