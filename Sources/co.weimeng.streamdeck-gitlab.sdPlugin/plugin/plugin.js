@@ -65,8 +65,6 @@ function onDidReceiveGlobalSettings(event) {
 //
 
 function onCommonDidReceiveSettings(event) {
-  console.log(`[onCommonDidReceiveSettings] ${JSON.stringify(event)}`);
-
   // Start polling GitLab API if not already started
   if (fetchTimer === undefined || fetchTimer === null) {
     fetchGitlabUserCounts();
